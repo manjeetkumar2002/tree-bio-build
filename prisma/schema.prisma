@@ -1,12 +1,31 @@
 
 
 generator client {
-  provider = "prisma-client"
-  // output   = "../lib/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   // this is no longer supported edit in prisma.config.ts
-  // url =  env("DATABASE_URL")
+  // url      =  env("DATABASE_URL")
 }
+
+
+// userSchema 
+model User {
+  id String @id @default(cuid()) 
+  clerkId String @unique // clerk google authentication  gives u a id
+  email String @unique
+  username String? @unique // ? means optional
+
+  firstName String?
+  lastName String?
+  imageUrl String?
+
+  bio String? @db.VarChar(500)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+// npx prisma migrate dev
+// npx prisma db push
